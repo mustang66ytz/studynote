@@ -3,9 +3,9 @@
 ### **Input:** A point robot with a tactile sensor
 ### **Output:** A path to the *q<sub>goal</sub>* or a conclusion no such path exists
 
-**while** Forever **do**\s\s
-  **repeat**\s\s
-    From *q<sub>i-1</sub><sup>L</sup>*, move toward *q<sub>goal</sub>*\s\s
+**while** Forever **do**  
+  **repeat**  
+    From *q<sub>i-1</sub><sup>L</sup>*, move toward *q<sub>goal</sub>*   
   **until** *q<sub>goal</sub>* is reached **or** an obstacle is encountered at *q<sub>i</sub><sup>H</sup>*\s\s
   **if** Goal is reached **then**\s\s
     Exit\s\s
