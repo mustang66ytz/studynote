@@ -1,0 +1,226 @@
+# list the directory under ~ and /usr directories
+$ ls ~ /usr
+# long format list
+$ ls -l
+
+# commands are often followed by one or more options that modify their behavior and by one or more arguments, the items upon which the command acts. Most commands look like:
+$ command -options (--longoptions arguments
+ex: 
+# list the long format file information sorted by the modification date, and reverse the order
+$ ls -lt --reverse 
+
+# determine a file's type with file
+$ file picture.jpg
+
+# less program allows to view the content of a file
+$ less filename
+
+# wildcards using examples
+*				any files
+g*				any files begin with g
+b*.txt			any files begin with b and ending with .txt
+Data???			any files begin with Data followed by exactly 3 letters
+[abc]*			any file begins with either a, b, or c
+[[:upper:]]*	any file begins with uppercase letter
+[![:digit:]]*	any file not beginning with a digit
+
+# when three periods follow an argument, it means the argument can be repeated
+$ mkdir directory...
+ex:
+$ mkdir dir1 dir2 dir3
+
+# copy files
+# copy single file item1 to item2
+$ cp item1 item2
+# copy multiple items into a directory
+$ cp item... directory
+ex:
+# copy file1 to file2, if file2 exists, the user is prompted before it is overwritten
+cp -i file1 file2
+# all the files in dir1 are copied into dir2, dir2 must already exist
+$ cp dir1/* dir2
+
+# mv shares many same options as cp
+$ mv file1 file2 			# move file1 to file2
+$ mv file1 file2 dir1 		# move file1 and file2 into dir1
+
+# rm to remove files and directories
+# option: -i -r -f -v
+$ rm -rf file1 dir1 		# delete file1 and dir1 and its contents, if either of them do not exist, rm will continue silently
+
+# ln to create links
+# hard link:
+$ ln file link
+# symbolic link:
+$ ln -s item link
+
+# dispay a command's type
+$ type ls
+# display an executable's location
+$ which ls
+# get help for shell builtins
+$ help cd
+# dispay a program's manual page
+$ man program
+# display a very brief description of a command
+$ whatis ls
+# dispaly a menu page containing hyperlinks to documentation for a program
+$ info coreutils
+# creat your own commands with alias
+$ alias foo='cd /usr; ls; cd -'
+
+
+## redirecting standard output:
+
+# for example, we could tell the shell to send the output of the ls command to the file ls-output.txt instead of the screen
+$ ls -l /usr/bin > ls-output.txt
+# using the >> operator will result in the output being appended to the file, rather than being overwritten:
+$ ls -l /usr/bin >> ls-output.txt
+
+## redirecting standard error:
+
+# standard error is the same as file descriptor 2:
+$ ls -l /bin/usr 2> ls-error.txt
+
+## redirecting both standard output and standard error to one file:
+$ ls -l /bin/usr/ &> ls-output.txt
+
+## disposing of unwanted output:
+
+# suppress error messages from a command:
+$ ls -l /bin/usr 2> /dev/null
+
+## redirecting standard input:
+
+# cat-concatenate files
+# display file contents without paging:
+$ cat ls-output.txt
+# concatenate multiple files: movie.mpeg.001 movie.mpeg.002 movie.mpeg.003
+$ cat movie.mpeg.0* > movie.mpeg
+
+# create short txt file using cat:
+# 1. prompt to create a new txt file
+$ cat lazy_dog.txt
+# 2. enter the contents to the file
+lazy dog blahblah
+# 3. press ctrl-D to tell cat that it has reached the EOF on standard input
+# 4. to see the result, we can use cat to copy the file to standard output
+$ cat lazy_dog.txt
+# 4. or redirecting the standard input from keyboard to the file name
+$ cat < lazy_dog.txt
+
+## Pipelines
+
+# using the pipe operator | (vertical bar), the standard output of one command can be piped into the standard input of another:
+$ command1 | command2
+# we can use less to display, page by page, the output of any command that sends its results to standard output:
+$ ls -l /usr/bin | less
+
+## filters: takes input, change it somehow, and output it
+# make a combine list of all of the executbale programs in /bin and /usr/bin, put them in sorted order, and then view the list
+$ ls /bin /usr/bin | sort |less
+# uniq-report or omit repeated lines
+# add uniq to our pipeline to remove repeated file
+$ ls /bin /usr/bin | sort | uniq | less
+# wc-print line, word, and byte counts
+$ wc ls-output.txt
+# to see the number of items we have in our sorted list, we can do this
+$ ls /bin /usr/bin | sort | uniq | wc -l
+
+## grep-print lines matching a pattern
+# find all the files in our list of programs that have the word zip in the name:
+$ ls /bin /usr/bin | sort | uniq | grep zip
+# head/tail-print first/last part of files, -n 5 means 5 lines
+$ head -n 5 ls-output.txt
+# can also be used in the pipeline:
+$ ls /usr/bin | tail -n 5
+
+# tee-read from stdin and output to stdout and files
+# capture the entire listing to the file ls.txt before grep filters the pipeline's contents
+$ ls /usr/bin | tee ls.txt | grep zip
+
+## Expansion
+
+# pathname expansion examples
+$ echo D*
+Desktop Documents
+$ echo [[:upper:]]*
+Desktop Documents Music Pictures Public Templates Videos
+$ echo /usr/*share
+/usr/kerberos/share /usr/local/share
+
+# arithmetic expansion
+$ echo $(((5**2)*3))
+75
+
+# brace expansion
+$ echo number_{1..5}
+number_1 number_2 number_3 number_4 number_5
+
+# parameter expansion
+$ echo $USER
+me
+# to see a list of available variables, try this:
+$ printenv | less
+
+# command substitution - allows us to use the output of a command as an expansion
+$ echo $(ls)
+
+## Quoting
+
+# Double quote: all the special characters used by the shell lose their special meaning and are treated as ordinary characters, the exceptions are $, \, and '
+# Single quote: all expansions are supressed
+# Escaping character: quote only a single character
+$ echo \$5.00
+$5.00
+
+## Using history
+
+# Searching history:
+$ history | less
+# if we wanna find the commands we used to list /usr/bin, here is the way:
+$ history | grep /usr/bin
+# if line 88 command is what we need, here is the way: history expansion
+$ !88
+
+## Permissions
+
+# find out information about your identity:
+$ id
+
+# reading, writing, and executing
+$ ls -l foo.txt
+output: -rwxrw-r-- 1 me  me 0 2012-03-06 14:52 foo.txt
+first 10 characters: "-": file type
+					"rwx": owner permissions
+					"rw-": group permissions
+					"r--": world permissions
+# chomod: change file mode
+
+1. octal representation:
+$ chmod 600 foo.txt
+$ ls -l foo.txt
+output: -rw------- 1 me  me 0 2012-03-06 14:52 foo.txt
+Though remember the octal-to-binary mapping may seem inconvenient, you will usually have to use only a few common ones: 7(rwx), 6(rw-), 5(r-x), 4(r--), 0(---)
+
+2. symbolic representation:
+examples: u+x 				add execute permission for the owner
+		  u-x 				remove execute permission from the owner
+		  +x 				add execute permission for the owner, group, and the world, 				  equivalent to a+x
+		  go=rw 			set the group oener and anyone besides the owner to have read 					and write permission. If either the group owner or world 					  previosuly had execute permissions, remove them
+
+# changing identities
+
+su: run a shell with substitute user and group IDs
+$ su [-[l]] [user]
+If the -l option is included, the resulting shell session is a login shell for the specified user. If the user is not specified, the superuser is assumed. 
+example: to start a shell for the superuser: $ su - 
+		 when finished, enter exit to return to the previous shell: # exit
+Execute a single command:
+$ su -c "command"
+
+sudo: execute a command as another user
+The administrator can configure sudo to allow an ordinary user to execute commands as a differnet user (usually the superuser) in a very controlled way.
+
+chown: change file owner and group
+$ chown [owner][:[group]] file
