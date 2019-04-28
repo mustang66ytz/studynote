@@ -224,3 +224,52 @@ The administrator can configure sudo to allow an ordinary user to execute comman
 
 chown: change file owner and group
 $ chown [owner][:[group]] file
+
+--------------------------------------------------
+## Processes
+
+# viewing processes with ps
+$ ps
+$ ps x
+displays the processes belonging to every user
+$ ps aux 
+
+# viewing process dynamically with top
+$ top
+Keyboard commands: the two most interesting are h, which displays the program's help screen, and q, which quits top
+
+# Controlling Processes
+$ xlogo
+
+# Putting a Process in the Background
+To launch a program so that it is immediately placed in the background, we follow the command with an ampersand character (&)
+list the jobs that have been launched from our terminal
+$ jobs
+
+# Returning a Process to the Foreground
+$ fg %1
+The command fg followed by a percent sign and the job number does the trick
+
+# Stopping (Pausing) a Process
+ctrl-z
+
+# Signals
+$ xlogo &
+[1] 28401
+$ kill 28401
+[1]+ Terminated     xlogo
+
+syntax for the kill commands:
+$ kill [-signal] PID...
+if no signal is specified, the TERM (Terminate) signal is sent by default
+signals:
+Number         Name          Meaning
+1			   HUP		     Hang up
+2			   INT			 Interrupt, ctrl-c
+9 			   KILL 	     Kill, kernal immediately terminate the process
+15 			   TERM 		 Terminate, this is the default signal sent by the kill command
+18 			   CONT 		 Continue, restore a process after a stop signal
+19 			   STOP 		 Stop
+
+# Sending Signals to Multiple Processes with killall
+syntax: killall [-u user] [-signal] name...
