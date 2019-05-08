@@ -8,5 +8,6 @@
 **while** deltaU(q) != 0 **do**  
 >*q(i+1) = q(i) + alpha(i)deltaU(q(i)) *  
 >*i = i+1*  
+
 **end while**  
 
