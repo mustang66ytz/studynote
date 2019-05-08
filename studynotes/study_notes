@@ -25,3 +25,6 @@ docker inspect <task or container>                   # Inspect task or container
 docker container ls -q                                      # List container IDs
 docker stack rm <appname>                             # Tear down an application
 docker swarm leave --force      # Take down a single node swarm from the manager
+
+
+sudo sh -c 'eval "$(docker-machine env myvm1)"; docker-machine ls'
