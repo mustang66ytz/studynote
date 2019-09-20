@@ -1,0 +1,10 @@
+Q: how to use Eigen in ubuntu cmake project?
+A: 1. download the eigen library and unzip into any place in the computer. For example: /usr/local/include/
+   2. add the path of the eigen library (/usr/local/include) into the "include_directories" field of the cmakeLists.txt
+   3. in the cpp header or source file, use #include <eigen/Eigen> to include the Eigen library lcated under the "eigen" directory.
+
+Q: how to use rviz_visual_tools in ubuntu cmake project?
+A: 1. install moveit by following the official tutorial.
+   2. add "rviz_visual_tools" into the "find_package" field of the CmakeLists.txt 
+   3. add "#include <rviz_visual_tools/rviz_visual_tools.h>" to your cpp files.
+
