@@ -1,0 +1,16 @@
+Q: how to run the ompl python gui?
+A: cd ompl/omplapp-1.4.2-Source/gui
+   /usr/bin/python3 ./ompl_app.py
+
+Q: how to configure the ompl in cmake?
+A: add the following lines of code:
+   1. find_package(ompl)
+   2. include_directories(
+       include
+       ${ompl_INCLUDE_DIRS}
+      )
+   3. add_executable(${PROJECT_NAME}_simple_test_node src/ompl_simple_test.cpp)
+   4. target_link_libraries(${PROJECT_NAME}_simple_test_node
+       ${catkin_LIBRARIES}
+       ${OMPL_LIBRARIES}
+      )
