@@ -1,0 +1,5 @@
+# connecting ros with ur through tcp/ip:
+example: if the ip address of the robot is 192.168.1.13
+setup the ip address of your linux system: sudo ifconfig enp0s31f6 192.168.1.14
+test the connection: ping 192.168.1.13
+
